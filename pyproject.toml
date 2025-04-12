@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "econ-flow-visualizer"
+version = "0.1.0"
+description = "Economic network analyzer and visualizer"
+authors = ["Tu Nombre"]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pandas = "^2.2"
+polars = "^0.20"
+plotly = "^5.20"
+dash = "^2.16"
+networkx = "^3.3"
+requests = "^2.31"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,14 @@
+name: econ
+dependencies:
+  - python=3.11
+  - pandas
+  - numpy
+  - networkx
+  - matplotlib
+  - pip
+  - pip:
+    - polars
+    - plotly
+    - dash
+    - openpyxl
+    - requests
