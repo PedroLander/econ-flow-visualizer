@@ -1,1 +1,1 @@
-# Funciones gráficas (Plotly, NetworkX)
+# Graphical methods (Plotly, NetworkX)

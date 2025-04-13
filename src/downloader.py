@@ -1,1 +1,1 @@
-# Función para descargar tablas Eurostat
+# Method to download tables from Eurostat

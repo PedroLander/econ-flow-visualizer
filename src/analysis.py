@@ -1,1 +1,1 @@
-# Procesamiento de datos económicos
+# Economic data processing

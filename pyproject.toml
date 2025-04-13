@@ -14,5 +14,30 @@ networkx = "^3.3"
 requests = "^2.31"
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["maturin>=1.4,<2.0"]
+build-backend = "maturin"
+
+[project]
+name = "econ-flow-visualizer"
+version = "0.1.0"
+description = "Economic network analyzer and visualizer with Rust-powered data processing"
+authors = [{ name = "Tu Nombre", email = "your.email@example.com" }]
+requires-python = ">=3.11"
+dependencies = [
+    "flask>=2.0.0",
+    "polars>=0.20.0",
+    "plotly>=5.20.0",
+    "dash>=2.16.0",
+    "networkx>=3.3.0",
+    "requests>=2.31.0",
+]
+
+[tool.maturin]
+features = ["pyo3/extension-module"]
+python-source = "src"
+module-name = "rust_core._rust"
+bindings = "pyo3"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]

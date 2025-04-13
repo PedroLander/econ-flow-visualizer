@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FIGARO Trade Flow Visualization</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body { 
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        #yearSelect {
+            margin: 20px 0;
+            padding: 5px;
+            font-size: 16px;
+        }
+        #sankeyPlot {
+            width: 100%;
+            min-height: 800px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>FIGARO Trade Flow Visualization</h1>
+        <select id="yearSelect">
+            {% for year in years %}
+            <option value="{{ year }}">{{ year }}</option>
+            {% endfor %}
+        </select>
+        <div id="sankeyPlot"></div>
+    </div>
+
+    <script>
+        function updateVisualization(year) {
+            fetch(`/get_sankey/${year}`)
+                .then(response => response.json())
+                .then(figure => {
+                    Plotly.newPlot('sankeyPlot', figure.data, figure.layout);
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        document.getElementById('yearSelect').addEventListener('change', function() {
+            updateVisualization(this.value);
+        });
+
+        // Load initial visualization
+        window.onload = function() {
+            const initialYear = document.getElementById('yearSelect').value;
+            updateVisualization(initialYear);
+        };
+    </script>
+</body>
+</html>
