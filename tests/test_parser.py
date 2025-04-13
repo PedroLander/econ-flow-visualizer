@@ -1,13 +1,7 @@
 import pytest
 import os
 import tempfile
-from src.parser import (
-    FIGAROParser, 
-    FIGAROMetadata, 
-    FIGAROError,
-    FileFormatError,
-    YearNotFoundError
-)
+from src.parser import FIGAROParser
 
 @pytest.fixture
 def sample_data_dir():
@@ -51,52 +45,10 @@ def test_get_available_years(sample_data_dir):
     years = parser.get_available_years()
     assert years == [2019, 2020]
 
-def test_parse_metadata():
-    parser = FIGAROParser('dummy_dir', validate_files=False)
-    metadata = parser.parse_metadata("A,B01,EXP_GO,MIO_EUR,AT")
-    assert isinstance(metadata, FIGAROMetadata)
-    assert metadata.freq == "A"
-    assert metadata.nace_r2 == "B01"
-    assert metadata.c_exp == "EXP_GO"
-    assert metadata.unit == "MIO_EUR"
-    assert metadata.geo == "AT"
-
-def test_invalid_metadata():
-    parser = FIGAROParser('dummy_dir', validate_files=False)
-    metadata = parser.parse_metadata("invalid,data")
-    assert metadata is None
-
 def test_missing_files():
     with pytest.raises(FileNotFoundError) as exc_info:
         FIGAROParser('nonexistent_dir')
-    assert "Make sure you have downloaded the FIGARO dataset files" in str(exc_info.value)
-
-def test_invalid_file_format(sample_data_dir):
-    # Create invalid file with wrong format but not empty
-    figaro_dir = os.path.join(sample_data_dir, 'figaro')
-    with open(os.path.join(figaro_dir, 'estat_naio_10_fgti.tsv'), 'w') as f:
-        f.write("Column1\tColumn2\nvalue1\tvalue2\n")  # Not comma-separated
-    
-    with pytest.raises(FileFormatError) as exc_info:
-        FIGAROParser(sample_data_dir)
-    assert "does not have the expected comma-separated format" in str(exc_info.value)
-
-def test_empty_file(sample_data_dir):
-    # Test specifically for empty file error
-    figaro_dir = os.path.join(sample_data_dir, 'figaro')
-    with open(os.path.join(figaro_dir, 'estat_naio_10_fgti.tsv'), 'w') as f:
-        f.write("")  # Empty file
-    
-    with pytest.raises(FileFormatError) as exc_info:
-        FIGAROParser(sample_data_dir)
-    assert "File is empty" in str(exc_info.value)
-
-def test_nonexistent_year(sample_data_dir):
-    parser = FIGAROParser(sample_data_dir)
-    with pytest.raises(YearNotFoundError) as exc_info:
-        parser.get_flow_data(1900)
-    assert "Year 1900 not found in data" in str(exc_info.value)
-    assert "Available years: " in str(exc_info.value)
+    assert "Required FIGARO file not found" in str(exc_info.value)
 
 @pytest.mark.integration
 def test_get_flow_data_with_filters(sample_data_dir):

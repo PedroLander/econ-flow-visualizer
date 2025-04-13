@@ -11,11 +11,25 @@ A high-performance economic data visualization tool combining Python and Rust fo
 
 This tool aims to provide interactive visualizations of economic input-output relationships using Eurostat FIGARO datasets. It combines Python's rich visualization capabilities with Rust's high-performance data processing.
 
+![Trade Flow Visualization](media/screenshoots/v0_20250413_1545.png)
+
 ### Current Features
 - Web interface built with Flask
 - Sankey diagram visualization of trade flows
 - Rust-powered data processing core
 - Support for Eurostat FIGARO TSV data format
+
+### Next Steps 🚀
+1. **Supply and Use Tables (SUT) Integration:**
+   - Implement visualization of Supply and Use tables
+   - Show how products and value flow through different sectors of the economy
+   - Add interactive filters for sector and product analysis
+   - Integrate time series analysis for economic evolution study
+
+2. **Enhanced Data Processing:**
+   - Add support for more granular sectoral analysis
+   - Implement chain-linking for constant price analysis
+   - Develop tools for structural decomposition analysis
 
 ### Known Issues to Fix 🔧
 1. **Rust Integration Issues:**
