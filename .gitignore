@@ -4,4 +4,3 @@ __pycache__/
 .ipynb_checkpoints/
 .env
 data/figaro
-rust_core/src/target/
