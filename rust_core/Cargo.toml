@@ -1,0 +1,18 @@
+[package]
+name = "rust_core"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "rust_core"
+crate-type = ["cdylib"]
+
+[dependencies]
+csv = "1.3.1"
+polars = { version = "0.34", features = ["lazy"] }
+pyo3 = { version = "0.19", features = ["extension-module"] }
+
+[profile.release]
+lto = true
+codegen-units = 1
+opt-level = 3
